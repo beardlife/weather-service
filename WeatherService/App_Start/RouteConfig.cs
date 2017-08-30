@@ -15,8 +15,8 @@ namespace WeatherService
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{city}",
+                defaults: new { controller = "Home", action = "Index", city = UrlParameter.Optional }
             );
         }
     }

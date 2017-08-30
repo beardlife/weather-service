@@ -1,4 +1,4 @@
-﻿
+﻿@model WeatherService.Models.WeatherVM
 @{
     Layout = null;
 }
@@ -8,10 +8,70 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Weather</title>
 </head>
 <body>
-    <div> 
-    </div>
+    <h3>
+        Sprawdź pogodę w dowolnym mieście
+    </h3>
+    @using (@Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        @Html.TextBoxFor(a => a.Query)
+        <input type="submit" />
+        <br />
+        <div style="color:red;">
+            @Html.ValidationMessageFor(a => a.Query)
+        </div>
+
+    }
+
+    @if (Model != null)
+    {
+        if (Model.ResponseCode != null && Model.ResponseCode == 200)
+        {
+            <br />
+            <div>
+                @Html.LabelFor(a => a.Weather.CityName)
+                @Html.DisplayTextFor(a => a.Weather.CityName)
+            </div>
+            <br />
+            <table>
+
+                <tr>
+                    <td style="width:120px;">@Html.LabelFor(a => a.Weather.Temp)</td>
+                    <td style="width:50px; text-align:right;">@Html.DisplayTextFor(a => a.Weather.Temp)</td>
+                    <td style="width:30px;">C</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(a => a.Weather.WindSpeed) </td>
+                    <td style="width:50px; text-align:right;">@Html.DisplayTextFor(a => a.Weather.WindSpeed)</td>
+                    <td>m/s</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(a => a.Weather.Cloudiness) </td>
+                    <td style="width:50px; text-align:right;">@Html.DisplayTextFor(a => a.Weather.Cloudiness)</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(a => a.Weather.Humidity) </td>
+                    <td style="width:50px; text-align:right;">@Html.DisplayTextFor(a => a.Weather.Humidity)</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(a => a.Weather.Pressure) </td>
+                    <td style="width:50px; text-align:right;">@Html.DisplayTextFor(a => a.Weather.Pressure)</td>
+                    <td>hPa</td>
+                </tr>
+            </table>
+        }
+        if (Model.ResponseCode == 404)
+        {
+            <div>
+                Nie znaleziono podanego miasta !
+            </div>
+        }
+
+    }
+
 </body>
 </html>
